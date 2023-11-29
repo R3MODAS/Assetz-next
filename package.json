@@ -12,12 +12,12 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "jquery": "^3.7.1",
     "next": "14.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
-    "react-owl-carousel": "^2.3.3"
+    "react-owl-carousel": "^2.3.3",
+    "wow.js": "^1.2.2"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.29",
