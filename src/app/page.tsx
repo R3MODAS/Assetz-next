@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { Responsive1, Responsive2 } from "./utils/constants";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -215,7 +215,9 @@ export default function Home() {
               {/* mobile */}
               <div className="menu-section mobile-menu">
                 <div id="close">
-                  <i className="fa fa-close" />
+                  <i>
+                    <FontAwesomeIcon icon={faClose} />
+                  </i>
                 </div>
                 <ul className="none-ul">
                   <li className="nav-item">
