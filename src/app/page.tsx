@@ -10,15 +10,17 @@ import { Responsive1, Responsive2 } from "./utils/constants";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
+import Link from "next/link";
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
   ssr: false
 });
 
-function CursorMove(e) {
-  const cursor = document.querySelector('.blob');
+function CursorMove(e: MouseEvent) {
+  const cursor = document.querySelector('.blob') as HTMLDivElement;
   cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
 }
+
 
 export default function Home() {
 
@@ -29,15 +31,19 @@ export default function Home() {
 
   if (typeof window !== 'undefined') {
     // scroll
-    $('.nav-link').click(function (e) {
-      e.preventDefault();
-      var target = $($(this).attr('href'));
-      if (target.length) {
-        var scrollTo = target.offset().top;
-        $('body, html').animate({ scrollTop: scrollTo + 'px' }, 800);
-        $('.mobile-menu').removeClass('open');
-      }
-    });
+    const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((navlink) => {
+      navlink.addEventListener("click", (e) => {
+        e.preventDefault();
+        const href = $(navlink).attr('href');
+        const target = href ? $(href) : null;
+        if (target?.length) {
+          const scrollTo = target.offset()?.top || 0;
+          $('body, html').animate({ scrollTop: scrollTo + 'px' }, 800);
+          $('.mobile-menu').removeClass('open');
+        }
+      })
+    })
 
     // mobile-menu
     $('#humbarger').click(function () {
@@ -50,7 +56,7 @@ export default function Home() {
 
     // menu
     $(window).scroll(function () {
-      if ($(this).scrollTop() > 50) {
+      if (window.scrollY > 50) {
         $('.navbar').addClass('scroll-menu');
       } else {
         $('.navbar').removeClass('scroll-menu');
@@ -60,17 +66,18 @@ export default function Home() {
     $('.dropdown span').click(function () {
       var dropDownList = $(this).parent();
       $(this).parent().find('ul').slideToggle().find('li').click(function () {
-        var v = $(this).attr('data-val');
+        var v = $(this).attr('data-val') as string;
         var t = $(this).text();
         dropDownList.find('input').attr('value', v);
         dropDownList.find('span').text(t);
       });
     });
+
     // close the list when click out..
-    $(document).mouseup(function (e) {
-      var container = $(".dropdown span");
-      if (!container.is(e.target)
-        && container.has(e.target).length === 0) {
+    $(document).mouseup(function (this: Document, e: JQuery.MouseUpEvent) {
+      const container = $(".dropdown span");
+
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
         container.parent().find('ul').slideUp();
       }
     });
@@ -119,6 +126,8 @@ export default function Home() {
     });
 
   }
+
+
   return (
     <div className="wrapper">
       {/*Gradient*/}
@@ -129,14 +138,14 @@ export default function Home() {
           <div className="row w-100">
             <div className="col-md-2 col-3">
               <div className="logo-section">
-                <a href="/">
+                <Link href="/">
                   <img
                     loading="lazy"
                     className="img-fluid"
                     src="assets/images/logo.svg"
                     alt="Logo"
                   />
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-md-10 col-9 p-0">
@@ -309,27 +318,21 @@ export default function Home() {
                         </h2>
                         <input
                           type="text"
-                          name=""
-                          id=""
                           placeholder="Name"
                           className="top-frm"
-                          required=""
+                          required
                         />
                         <input
                           type="email"
-                          name=""
-                          id=""
                           placeholder="Email"
                           className="top-frm"
-                          required=""
+                          required
                         />
                         <input
-                          type="number"
-                          name=""
-                          id=""
+                          type="tel"
                           placeholder="Phone"
                           className="top-frm"
-                          required=""
+                          required
                         />
                         <div className="dropdown">
                           <input type="hidden" name="you_name" defaultValue="" />
@@ -349,7 +352,7 @@ export default function Home() {
                             <li data-val={4}>20%</li>
                           </ul>
                         </div>
-                        <textarea className="top-frm" defaultValue={"Message"} />
+                        <textarea className="top-frm" placeholder="Message" />
                         <div className="txt-area">
                           <div className="circle" />
                           <p className="white common-font">
@@ -1077,6 +1080,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-
   )
 }

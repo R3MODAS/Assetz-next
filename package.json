@@ -1,5 +1,5 @@
 {
-  "name": "assetz-next",
+  "name": "assetez-react",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,16 +12,20 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@types/jquery": "^3.5.29",
     "next": "14.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18",
+    "react-dom": "^18",
     "react-fontawesome": "^1.7.1",
     "react-owl-carousel": "^2.3.3",
     "wow.js": "^1.2.2"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.29",
+    "@types/node": "^20.10.1",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.0.3"
+    "eslint-config-next": "14.0.3",
+    "typescript": "^5"
   }
 }
