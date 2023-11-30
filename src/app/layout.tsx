@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import "./css/bootstrap.min.css";
 import "./css/animate.min.css";
-import "./css/custom.css"
-import "./css/responsive.css"
 import Script from "next/script"
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";

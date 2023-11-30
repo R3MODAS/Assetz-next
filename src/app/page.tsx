@@ -1,5 +1,8 @@
 "use client";
 
+import "./css/custom.css"
+import "./css/responsive.css"
+
 const isServer = typeof window === 'undefined'
 const WOW = !isServer ? require('wow.js') : null
 
