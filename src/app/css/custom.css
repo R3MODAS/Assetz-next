@@ -71,7 +71,7 @@
   font-display: swap;
 }
 
-body{ font-weight: 400; font-family: 'Neue Montreal'; background: #fff;}
+body{ font-weight: 400; font-family: 'Neue Montreal'; background: #fff; overflow-x : hidden;}
 /*common class*/
 a{text-decoration: none; transition: 0.4s; display: inline-block;}
 .none-ul{list-style: none;}
