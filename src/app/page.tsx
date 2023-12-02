@@ -12,27 +12,47 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { Responsive1, Responsive2 } from "./utils/constants";
 import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
   ssr: false
 });
 
-function CursorMove(e: MouseEvent) {
-  const cursor = document.querySelector('.blob') as HTMLDivElement;
-  cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
-}
-
-
 export default function Home() {
+
+  const CursorMove = (e: MouseEvent) => {
+    const blob = document.querySelector('.blob') as HTMLDivElement;
+    const cursor = document.querySelector(".cursor") as HTMLDivElement;
+    const cursorFollow = document.querySelector(".cursor-follower") as HTMLDivElement;
+
+    blob.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
+    cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
+    cursorFollow.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
+  }
 
   useEffect(() => {
     new WOW().init()
     document.addEventListener('mousemove', CursorMove);
+
+
+    return () => {
+      document.removeEventListener("mousemove", CursorMove);
+    }
   }, [])
 
   if (typeof window !== 'undefined') {
+
+    // variables 
+    var toTop = $('.enquire');
+    // logic
+    toTop.on('click', function () {
+      $('html, body').animate({
+        scrollTop: 0,
+      });
+      return false;
+    });
+
     // scroll
     const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach((navlink) => {
@@ -65,6 +85,7 @@ export default function Home() {
         $('.navbar').removeClass('scroll-menu');
       }
     });
+
     // dropdown
     $('.dropdown span').click(function () {
       var dropDownList = $(this).parent();
@@ -128,13 +149,18 @@ export default function Home() {
       });
     });
 
-  }
 
+  }
 
   return (
     <div className="wrapper">
       {/*Gradient*/}
       <div className="blob" />
+
+      {/* Cursor */}
+      <div className="cursor"></div>
+      <div className="cursor-follower"></div>
+
       {/* navbar */}
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
@@ -186,9 +212,7 @@ export default function Home() {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link enquery-btn" href="mailto:test@test.com">
-                      Enquire
-                    </a>
+                    <a className="nav-link enquery-btn enquire">Enquire </a>
                   </li>
                 </ul>
                 <div className="nav-bottom-logo">
@@ -197,16 +221,16 @@ export default function Home() {
                       <img
                         loading="lazy"
                         className="img-fluid"
-                        src="assets/images/logo1.svg"
-                        alt="Logo"
+                        src="assets/images/assetz.webp"
+                        alt="assetz"
                       />
                     </li>
                     <li className="nav-item">
                       <img
                         loading="lazy"
                         className="img-fluid"
-                        src="assets/images/logo2.svg"
-                        alt="Logo"
+                        src="assets/images/sambhav.webp"
+                        alt="sambhav"
                       />
                     </li>
                   </ul>
@@ -246,9 +270,7 @@ export default function Home() {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link enquery-btn" href="mailto:test@test.com">
-                      Enquire
-                    </a>
+                    <a className="nav-link enquery-btn enquire">Enquire </a>
                   </li>
                 </ul>
                 <div className="nav-bottom-logo">
@@ -276,6 +298,7 @@ export default function Home() {
           </div>
         </div>
       </nav>
+
       {/* hero section */}
       <section id="banner">
         <div className="container-fluid p-0">
@@ -382,13 +405,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* rooted */}
       <section id="overview">
         <div className="container">
           <div className="rooted">
             <div className="row">
               <div className="col-md-5">
-                <div className="root-left wow fadeInLeft" data-wow-duration="2s">
+                <div className="root-left">
                   <img
                     loading="lazy"
                     className="img-fluid"
@@ -398,7 +422,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="col-md-7">
-                <div className="root-right wow fadeInRight" data-wow-duration="2s">
+                <div className="root-right wow fadeInUp" data-wow-duration="2s">
                   <div className="root-right-data">
                     <h2 className="header-three gray-two normal">
                       Rooted in Nature
@@ -503,6 +527,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* owl carousel */}
       <section id="ecosystem">
         <div className="fullscreen-carousel">
@@ -511,7 +536,7 @@ export default function Home() {
               <img
                 loading="lazy"
                 className="img-fluid"
-                src="assets/images/carousel.webp"
+                src="assets/images/carousel1.webp"
                 alt="img"
               />
               <div className="carousel-data">
@@ -531,45 +556,37 @@ export default function Home() {
               <img
                 loading="lazy"
                 className="img-fluid"
-                src="assets/images/carousel.webp"
+                src="assets/images/carousel2.webp"
                 alt="img"
               />
               <div className="carousel-data">
                 <h2 className="white normal header-four">
                   Amenities at Promise of Spring
                 </h2>
-                <label className="white semibold header-two">
-                  Basketball Court
-                </label>
-                <p className="white normal header-five">
-                  Shoot some hoops and enjoy friendly matches on our well-maintained
-                  basketball court.
-                </p>
+                <label className="white semibold header-two">Recreation Spaces</label>
+                <p className="white normal header-five">Find your favourite spot to relax, read, or simply unwind in our dedicated recreation spaces.</p>
+
               </div>
             </div>
             <div className="item">
               <img
                 loading="lazy"
                 className="img-fluid"
-                src="assets/images/carousel.webp"
+                src="assets/images/carousel3.webp"
                 alt="img"
               />
               <div className="carousel-data">
                 <h2 className="white normal header-four">
                   Amenities at Promise of Spring
                 </h2>
-                <label className="white semibold header-two">
-                  Basketball Court
-                </label>
-                <p className="white normal header-five">
-                  Shoot some hoops and enjoy friendly matches on our well-maintained
-                  basketball court.
-                </p>
+                <label className="white semibold header-two">Club House</label>
+                <p className="white normal header-five">The heart of the community, our club house offers a range of amenities, from fitness facilities to spaces for social gatherings.</p>
               </div>
             </div>
           </OwlCarousel>
         </div>
       </section>
+
       {/* structure */}
       <section id="masterplan">
         <div className="container">
@@ -577,9 +594,7 @@ export default function Home() {
             <div className="row">
               <div className="col-md-5 order-md-1 order-sm-2 order-2">
                 <div
-                  className="structure-left wow fadeInLeft"
-                  data-wow-duration="2s"
-                >
+                  className="structure-left">
                   <h2 className="neue header-one gray-two normal">
                     Structured With
                     <br /> Care and Vision
@@ -658,7 +673,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="enquery-btn-section">
-                    <a href="#banner" className="common-btn">
+                    <a className="common-btn enquire">
                       Enquire
                     </a>
                   </div>
@@ -666,7 +681,7 @@ export default function Home() {
               </div>
               <div className="col-md-7 order-md-2 order-sm-1 order-1">
                 <div
-                  className="structure-right wow fadeInRight"
+                  className="structure-right wow fadeInUp"
                   data-wow-duration="2s"
                 >
                   <img
@@ -693,16 +708,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* plot configaration */}
       <section id="amenities">
         <div className="plot-configaration">
           <div className="container">
             <div className="row">
               <div className="col-md-6 order-md-1 order-sm-2 order-2">
-                <div
-                  className="plot-configaration-left wow fadeInLeft"
-                  data-wow-duration="2s"
-                >
+                <div className="plot-configaration-left">
                   <h2 className="neue header-one white normal">
                     Plot Configurations
                   </h2>
@@ -743,7 +756,7 @@ export default function Home() {
               </div>
               <div className="col-md-6 order-md-2 order-sm-1 order-1">
                 <div
-                  className="plot-configaration-right wow fadeInRight"
+                  className="plot-configaration-right wow fadeInUp"
                   data-wow-duration="2s"
                 >
                   <div id="big-image">
@@ -772,6 +785,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* prime location */}
       <section id="location">
         <div className="container">
@@ -963,6 +977,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* stage padding carousel */}
       <section>
         <div className="stage-padding-carousel wow fadeInUp" data-wow-duration="2s">
@@ -1008,6 +1023,7 @@ export default function Home() {
           </OwlCarousel>
         </div>
       </section>
+
       {/* about section */}
       <section>
         <div className="about-section">
@@ -1039,6 +1055,7 @@ export default function Home() {
           </p>
         </div>
       </section>
+
       {/* footer */}
       <footer>
         <div className="container">
@@ -1057,18 +1074,8 @@ export default function Home() {
             </div>
             <div className="col-6">
               <div className="footer-right">
-                <img
-                  loading="lazy"
-                  className="img-fluid"
-                  src="assets/images/assetz-w.svg"
-                  alt="assetz"
-                />
-                <img
-                  loading="lazy"
-                  className="img-fluid"
-                  src="assets/images/samhbav-w.svg"
-                  alt="samhbav"
-                />
+                <img loading="lazy" className="img-fluid" src="assets/images/assetz-w.webp" alt="assetz" />
+                <img loading="lazy" className="img-fluid" src="assets/images/samhbav-w.webp" alt="samhbav" />
               </div>
             </div>
             <div className="col-md-6">
